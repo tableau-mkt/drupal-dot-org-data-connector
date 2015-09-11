@@ -1,0 +1,10 @@
+{
+  "name": "drupal-org",
+  "version": "0.0.0",
+  "dependencies": {
+    "bootstrap": "~4.0.0",
+    "conditionize": "*",
+    "lodash": "~3.10.1",
+    "jquery": "~1.11"
+  }
+}

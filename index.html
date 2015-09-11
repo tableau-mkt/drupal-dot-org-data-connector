@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Drupal.org</title>
+  <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="src/main.css">
+</head>
+<body>
+
+<div class="navbar-collapse collapse inverse" id="navbar-header">
+  <div class="container-fluid">
+    <div class="about">
+      <h4>About</h4>
+      <p class="text-muted">Add some information about your web data connector,
+        the service you're connecting to, your affiliation to it, or any other
+        background context. As always, provide contact information or social
+        links so people can report issues.
+      </p>
+    </div>
+    <div class="social">
+      <h4>Resources</h4>
+      <ul class="list-unstyled">
+        <li><a href="https://github.com/tableau-mkt/drupal-dot-org-data-connector">Report an issue</a></li>
+        <li><a href="https://www.drupal.org/api">Drupal.org REST API Documentation</a></li>
+        <li><a href="http://cgit.drupalcode.org/restws/tree/README.txt#n92">restws Query Documentation</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="navbar navbar-inverse navbar-static-top">
+  <div class="container-fluid">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-header">
+      &#9776;
+    </button>
+    <a href="#" class="navbar-brand">Drupal.org</a>
+  </div>
+</div>
+
+<section class="jumbotron text-center">
+  <div class="container">
+    <h1 class="jumbotron-heading">Connect to Drupal.org</h1>
+      <form>
+        <p>
+          <select class="form-control" name="Entity" id="Entity">
+            <option value="">-- Entity --</option>
+            <option value="comment">Comment</option>
+            <option value="node" selected>Node</option>
+            <option value="taxonomy_term">Taxonomy Term</option>
+            <option value="user">User</option>
+          </select>
+          <label class="sr-only" for="Entity">Entity</label>
+        </p>
+        <p>
+          <!-- Note: Conditionally visible based on Entity value -->
+          <select class="form-control" name="ContentType" id="ContentType" data-cond-option="Entity" data-cond-value="node">
+            <option value="">-- Content Type --</option>
+            <option value="book">Book</option>
+            <option value="book_listing">Book Listing</option>
+            <option value="casestudy">Case Study</option>
+            <option value="changenotice">Change Notice</option>
+            <option value="forum">Forum</option>
+            <option value="image">Image</option>
+            <option value="organization">Organization</option>
+            <option value="packaging_whitelist">Packaging Whitelist</option>
+            <option value="page">Page</option>
+            <option value="project_issue" selected>Project Issue</option>
+            <option value="project_core">Project Core</option>
+            <option value="project_distribution">Project Distribution</option>
+            <option value="project_drupalorg">Project (Drupal.org)</option>
+            <option value="project_module">Project Module</option>
+            <option value="project_release">Project Release</option>
+            <option value="project_theme">Project Theme</option>
+            <option value="project_theme_engine">Project Theme Engine</option>
+            <option value="project_translation">Project Translation</option>
+            <option value="story">Story</option>
+          </select>
+        <label class="sr-only" for="ContentType">Content Type</label>
+      </p>
+      <p>
+        <input class="form-control" type="text" name="QueryParameters" id="QueryParameters" placeholder="Additional restws query parameters" />
+        <label class="sr-only" for="QueryParameters">Additional restws query parameters</label>
+      </p>
+      <p>
+        <input class="form-control" type="number" name="MaxRecordsToReturn" id="MaxRecordsToReturn" value="1000" placeholder="Maximum number of records to return" />
+        <label class="sr-only" for="MaxRecordsToReturn">Maximum number of records to return</label>
+      </p>
+      <div>
+        <input type="submit" value="Connect" class="btn btn-lg btn-primary btn-block" />
+      </div>
+    </form>
+  </div>
+</section>
+
+<script src="build/all.min.js"></script>
+</body>
+</html>

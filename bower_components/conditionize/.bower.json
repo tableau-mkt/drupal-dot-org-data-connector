@@ -1,0 +1,33 @@
+{
+  "name": "conditionize",
+  "homepage": "https://github.com/renvrant/conditionize.js",
+  "authors": [
+    "Renee Vrantsidis <renee@renvrant.com>"
+  ],
+  "description": "A small jQuery plugin for handling showing and hiding things conditionally based on input - typically groups of form fields.",
+  "main": "conditionize.jquery.js",
+  "moduleType": [
+    "globals"
+  ],
+  "keywords": [
+    "jquery",
+    "conditional"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "_release": "78b78851e9",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "78b78851e951f728cd74985349c702031056c0b7"
+  },
+  "_source": "git://github.com/renvrant/conditionize.js.git",
+  "_target": "*",
+  "_originalSource": "conditionize"
+}
