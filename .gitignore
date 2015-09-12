@@ -3,3 +3,4 @@ build
 npm-debug.log
 .DS_Store
 /*.env
+.grunt
