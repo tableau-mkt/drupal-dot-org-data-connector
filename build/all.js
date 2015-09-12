@@ -27559,10 +27559,16 @@ module.exports = function($, tableau, wdcw, util, DrupalOrgMeta) {
   wdcw.tableData = function tableData(registerData, lastRecord) {
     var connector = this,
         connectionData = connector.getConnectionData(),
-        url = lastRecord && lastRecord.indexOf('http') === 0 ? lastRecord : wdcw.buildApiUrlFrom(connectionData),
+        url = wdcw.buildApiUrlFrom(connectionData),
         multiValueFields = DrupalOrgMeta.multiValueFields(),
         timestampFields = DrupalOrgMeta.timestampFields(),
         maxNumberOfRows = connectionData.MaxRecordsToReturn;
+
+    // Non-JSON affixed API calls can be flakey. Ensure .json is affixed.
+    if (lastRecord && lastRecord.indexOf('http') === 0) {
+      lastRecord = lastRecord.replace(connectionData.Entity, connectionData.Entity + '.json');
+      url = lastRecord;
+    }
 
     $.getJSON(url, function getJsonSuccess(data) {
       var records = data.list || [],
