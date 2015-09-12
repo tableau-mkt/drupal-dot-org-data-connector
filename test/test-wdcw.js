@@ -81,7 +81,8 @@ describe('drupal-org-connector:tableData', function describesConnectorTableData(
     sinon.spy(jQuery, 'getJSON');
     wdcw = wdcwFactory(jQuery, {}, {}, {}, {
       // @todo Tests, tests, tests...
-      multiValueFields: sinon.spy()
+      multiValueFields: sinon.spy(),
+      timestampFields: sinon.spy()
     });
   });
 

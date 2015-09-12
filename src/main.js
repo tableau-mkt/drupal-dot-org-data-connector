@@ -160,6 +160,7 @@ module.exports = function($, tableau, wdcw, util, DrupalOrgMeta) {
     var connectionData = this.getConnectionData(),
         url = lastRecord && lastRecord.indexOf('http') === 0 ? lastRecord : wdcw.buildApiUrlFrom(connectionData),
         multiValueFields = DrupalOrgMeta.multiValueFields(),
+        timestampFields = DrupalOrgMeta.timestampFields(),
         maxNumberOfRows = connectionData.MaxRecordsToReturn;
 
     $.getJSON(url, function getJsonSuccess(data) {
@@ -167,12 +168,11 @@ module.exports = function($, tableau, wdcw, util, DrupalOrgMeta) {
           processedData = [];
 
       records.forEach(function shapeApiData(record) {
-        if (record.created) {
-          record.created = new Date(record.created * 1000).toISOString();
-        }
-        if (record.changed) {
-          record.changed = new Date(record.changed * 1000).toISOString();
-        }
+        timestampFields.forEach(function shapeTimestampFields(field) {
+          if (record[field]) {
+            record[field] = new Date(record[field] * 1000).toISOString();
+          }
+        });
 
         multiValueFields.forEach(function shapeMultiValueFields(field) {
           if (record[field.name]) {
