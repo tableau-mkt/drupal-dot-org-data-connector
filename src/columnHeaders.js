@@ -386,7 +386,7 @@ DrupalOrgMeta.getNode = function getNode(type) {
         "comment": "int",
         "comments": "string",
         "comment_count": "int",
-        "last_comment_timestamp": "int",
+        "last_comment_timestamp": "datetime",
         "created": "datetime",
         "changed": "datetime"
       };
@@ -444,6 +444,10 @@ DrupalOrgMeta.getUser = function getUser() {
     },
     "created": "datetime"
   }
+};
+
+DrupalOrgMeta.timestampFields = function timestampFields() {
+  return ['created', 'changed', 'last_comment_timestamp'];
 };
 
 DrupalOrgMeta.multiValueFields = function multiValueFields() {
