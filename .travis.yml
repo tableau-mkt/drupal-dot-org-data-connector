@@ -9,6 +9,8 @@ env:
 before_install:
   - npm install -g grunt-cli
 
+script:
+  - npm test
+
 after_success:
-  - git config --global user.name "Travis Deployment"
   - test $TRAVIS_PULL_REQUEST == "false" && test $TRAVIS_BRANCH == "master" && grunt autoDeploy
