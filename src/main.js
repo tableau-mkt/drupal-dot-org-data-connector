@@ -7,6 +7,7 @@ var module = module || {},
     DrupalOrgMeta = DrupalOrgMeta || {};
 
 module.exports = function($, tableau, wdcw, util, DrupalOrgMeta) {
+  var rowsProcessed = 0;
 
   /**
    * Run during initialization of the web data connector.
@@ -159,8 +160,7 @@ module.exports = function($, tableau, wdcw, util, DrupalOrgMeta) {
     var connectionData = this.getConnectionData(),
         url = lastRecord && lastRecord.indexOf('http') === 0 ? lastRecord : wdcw.buildApiUrlFrom(connectionData),
         multiValueFields = DrupalOrgMeta.multiValueFields(),
-        maxNumberOfRows = connectionData['maxNumberOfRows'],
-        rowsProcessed = 0;
+        maxNumberOfRows = connectionData.MaxRecordsToReturn;
 
     $.getJSON(url, function getJsonSuccess(data) {
       var records = data.list || [],
@@ -181,8 +181,8 @@ module.exports = function($, tableau, wdcw, util, DrupalOrgMeta) {
         });
 
         processedData.push(util.flattenData(record));
-        rowsProcessed += processedData.length;
       });
+      rowsProcessed += records.length;
 
       if (rowsProcessed >= maxNumberOfRows || data.last === data.self) {
         registerData(processedData);
