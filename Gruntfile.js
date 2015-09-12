@@ -27,6 +27,7 @@ module.exports = function(grunt) {
           'bower_components/conditionize/conditionize.jquery.js',
           'bower_components/lodash/lodash.js',
           'src/wrapper.js',
+          'src/util.js',
           'src/**/*.js'
         ],
         dest: 'build/all.js'
