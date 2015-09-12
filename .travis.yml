@@ -1,0 +1,14 @@
+language: node_js
+node_js:
+  - '0.12'
+
+env:
+  global:
+    secure: MhM+RGfZD7tBj7P8GIldgeRa8iMA2khs1074HpiuBU44XjNCBBeLn2ctAQ74qfoBWEY8PNzUcXXy2BAdVGbfLMZPYonrbayF+47jgU8Z3KV4ZOaAbROJFsr3HgXgDqEcAHRJedokhu2zxs1W6jnW7E+mghgSdHCKsqVdFRsVQAvSNV8YhrPeMcWhvtT6VeLbCXHACQD/6O/R2N6vYfHIDSh9H6C+yAXjHICiw8QwxZXFfKEZuABemddACafdBcHBb6ZyRkJumVHVrIk1yewAXMgTDpTlScsAvwRfYneFwj6095VGm4yXtvteauOT50Ocu1EtadE38QS49x5CcJcpBCakfd/CalBRedF+eRoczoY1LWQMeiDk0K7TcberxwSeil/paXSlejvvrc6dmqBJvG4K2TKvHGJlo3e2Z86hUVMFseoB2wCfDM6XfKxC+HKKgyM1323hef5KRiB8XCCgBgXc5XdSG+C8cNYgfbjEMtQLOwdMI1dSc3BDl/fjyzH6Ii7SiYoJAryhqNnBQ9ZCusji0P9dPOZ50meIWsdsgrrHnovpx7D5nhnbDfTLFtDepXhkOoLb1qNPGMlZf+PmQqXhaReAc3xa060oNxp0mzunwfiBMm+HdFmzAa5OfcbsSv/tHxhdij+snJRecdX90XQdbsJX1/+DlyYh1MGq0Us=
+
+before_install:
+  - npm install -g grunt-cli
+
+after_success:
+  - git config --global user.name "Travis Deployment"
+  - test $TRAVIS_PULL_REQUEST == "false" && test $TRAVIS_BRANCH == "master" && grunt autoDeploy
