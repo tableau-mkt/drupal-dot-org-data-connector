@@ -7,7 +7,8 @@ var module = module || {},
     DrupalOrgMeta = DrupalOrgMeta || {};
 
 module.exports = function($, tableau, wdcw, util, DrupalOrgMeta) {
-  var rowsProcessed = 0;
+  var rowsProcessed = 0,
+      retriesAttempted = 0;
 
   /**
    * Run during initialization of the web data connector.
@@ -157,7 +158,8 @@ module.exports = function($, tableau, wdcw, util, DrupalOrgMeta) {
    *   triggered.
    */
   wdcw.tableData = function tableData(registerData, lastRecord) {
-    var connectionData = this.getConnectionData(),
+    var connector = this,
+        connectionData = connector.getConnectionData(),
         url = lastRecord && lastRecord.indexOf('http') === 0 ? lastRecord : wdcw.buildApiUrlFrom(connectionData),
         multiValueFields = DrupalOrgMeta.multiValueFields(),
         timestampFields = DrupalOrgMeta.timestampFields(),
@@ -189,6 +191,17 @@ module.exports = function($, tableau, wdcw, util, DrupalOrgMeta) {
       }
       else {
         registerData(processedData, data.next);
+      }
+    }).fail(function getJsonFailed() {
+      // If we're still under the number of allowed failed attempts, retry.
+      if (retriesAttempted <= 5) {
+        retriesAttempted++;
+        wdcw.tableData.call(connector, registerData, lastRecord);
+      }
+      // Otherwise, abort.
+      else {
+        tableau.abortWithError('JSON fetch failed too many times. Aborting.');
+        registerData([]);
       }
     });
   };

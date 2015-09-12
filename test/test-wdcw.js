@@ -76,9 +76,19 @@ describe('drupal-org-connector:tableData', function describesConnectorTableData(
   var regsterData;
 
   beforeEach(function connectorTableDataBeforeEach() {
+    var ajaxStub = sinon.stub(jQuery, 'ajax'),
+        getJSONStub = sinon.stub(jQuery, 'getJSON');
+
+    function ajaxResponse() {
+      // @todo Tests, tests, tests...
+      return {fail: function() {}};
+    }
+
+    ajaxStub.returns(ajaxResponse());
+    getJSONStub.returns(ajaxResponse());
+
     regsterData = sinon.spy();
-    sinon.spy(jQuery, 'ajax');
-    sinon.spy(jQuery, 'getJSON');
+
     wdcw = wdcwFactory(jQuery, {}, {}, {}, {
       // @todo Tests, tests, tests...
       multiValueFields: sinon.spy(),
