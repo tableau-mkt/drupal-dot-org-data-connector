@@ -27279,18 +27279,30 @@ DrupalOrgMeta.multiValueFields = function multiValueFields() {
     "pluck": "id"
   }];
 };
-;(function($) {
+;(function($, wdcw) {
   $(document).ready(function interactionDocumentReady() {
     var $contentType = $('select[name="ContentType"]'),
-        $entity = $('select[name="Entity"]');
+        $entity = $('select[name="Entity"]'),
+        updateExplainApi;
 
     $contentType.conditionize();
     $entity.change(function entityChange() {
       $contentType.conditionize();
     });
 
+    updateExplainApi = function updateExplainApi() {
+      $('#explain_api').val(wdcw.buildApiUrlFrom({
+        Entity: $('[name="Entity"]').val(),
+        ContentType: $('[name="ContentType"]').val(),
+        QueryParameters: $('[name="QueryParameters"]').val()
+      }));
+    };
+
+    updateExplainApi();
+    $('select').change(updateExplainApi);
+    $('input').keyup(updateExplainApi);
   });
-})(jQuery);
+})(jQuery, wdcw);
 ;var module = module || {},
     window = window || {},
     jQuery = jQuery || {},
@@ -27450,7 +27462,7 @@ module.exports = function($, tableau, wdcw, util, DrupalOrgMeta) {
    */
   wdcw.tableData = function tableData(registerData, lastRecord) {
     var connectionData = this.getConnectionData(),
-        url = lastRecord && lastRecord.indexOf('http') === 0 ? lastRecord : buildApiUrlFrom(connectionData),
+        url = lastRecord && lastRecord.indexOf('http') === 0 ? lastRecord : wdcw.buildApiUrlFrom(connectionData),
         multiValueFields = DrupalOrgMeta.multiValueFields(),
         maxNumberOfRows = connectionData['maxNumberOfRows'],
         rowsProcessed = 0;
@@ -27494,7 +27506,7 @@ module.exports = function($, tableau, wdcw, util, DrupalOrgMeta) {
    * @param {object} connectionData
    *   Connection data for this connector.
    */
-  function buildApiUrlFrom(connectionData) {
+  wdcw.buildApiUrlFrom = function buildApiUrlFrom(connectionData) {
     var entityType = connectionData.Entity,
         entityBundle = connectionData.ContentType,
         queryParams = connectionData.QueryParameters,
@@ -27507,7 +27519,7 @@ module.exports = function($, tableau, wdcw, util, DrupalOrgMeta) {
     }
 
     return path + separator + queryParams;
-  }
+  };
 
   return wdcw;
 };

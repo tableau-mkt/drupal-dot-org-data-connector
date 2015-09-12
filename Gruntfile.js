@@ -65,7 +65,19 @@ module.exports = function(grunt) {
       options: {
         base: '.'
       },
-      src: ['**']
+      src: ['**'],
+      travisDeploy: {
+        options: {
+          user: {
+            name: 'Travis Deployment',
+            email: 'visualanalysis@tableau.com'
+          },
+          repo: 'https://' + process.env.GH_TOKEN + '@github.com/tableau-mkt/drupal-dot-org-data-connector.git',
+          message: 'Auto-deploy via Travis CI',
+          silent: true
+        },
+        src: ['**']
+      }
     }
   });
 
@@ -96,4 +108,10 @@ module.exports = function(grunt) {
     'build',
     'gh-pages'
   ]);
+
+  grunt.registerTask('autoDeploy', [
+    'build',
+    'gh-pages:travisDeploy'
+  ]);
+
 };
