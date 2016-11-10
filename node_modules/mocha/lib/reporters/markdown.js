@@ -38,7 +38,7 @@ function Markdown(runner) {
     var key = SUITE_PREFIX + suite.title;
 
     obj = obj[key] = obj[key] || { suite: suite };
-    suite.suites.forEach(function() {
+    suite.suites.forEach(function(suite) {
       mapTOC(suite, obj);
     });
 
@@ -82,7 +82,7 @@ function Markdown(runner) {
   });
 
   runner.on('pass', function(test) {
-    var code = utils.clean(test.fn.toString());
+    var code = utils.clean(test.body);
     buf += test.title + '.\n';
     buf += '\n```js\n';
     buf += code + '\n';
